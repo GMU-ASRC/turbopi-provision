@@ -10,6 +10,8 @@ if [ ! -f /etc/sudoers.d/020_pi ]; then
 fi
 sudo apt update
 
+set -e  # exit on error
+set -x  # echo commands
 
 # this didn't work but i didn't try it fully:
 # https://www.reddit.com/r/debian/comments/166cuem/help_easy_vnc_steps/
@@ -23,8 +25,8 @@ sudo apt update
 # oh wait we can actually just add nonint lol
 # https://loganmarchione.com/2021/07/raspi-configs-mostly-undocumented-non-interactive-mode/
 # of course i find this after figuring out how to do it a different way
-sudo raspi_config nonint do_vnc 0  # enable wayvnc
-sudo raspi_config nonint do_i2c 0  # enable i2c
+sudo raspi-config nonint do_vnc 0  # enable wayvnc
+sudo raspi-config nonint do_i2c 0  # enable i2c
 # sudo apt install tigervnc-standalone-server
 
 
@@ -32,6 +34,7 @@ sudo raspi_config nonint do_i2c 0  # enable i2c
 
 # INSTALL UV
 curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
 
 # deactivate any virtual environments
 if command -v deactivate &> /dev/null; then deactivate ; fi
