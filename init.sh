@@ -43,7 +43,7 @@ if command -v deactivate &> /dev/null; then deactivate ; fi
 if command -v deactivate &> /dev/null; then deactivate ; fi
 
 if [ -f /turbopy/core/scripts/uninstall_buttonman.sh ]; then
-   echo Uninstalling buttonman & TurboPi core services
+   echo Uninstalling buttonman \& TurboPi core services
    sudo bash /turbopy/core/scripts/uninstall_buttonman.sh
 fi
 
