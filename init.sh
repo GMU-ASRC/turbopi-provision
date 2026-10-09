@@ -41,7 +41,7 @@ if command -v deactivate &> /dev/null; then deactivate ; fi
 if command -v deactivate &> /dev/null; then deactivate ; fi
 
 if [ -f /turbopy/core/scripts/uninstall_buttonman.sh ]; then
-   sudo /turbopy/core/scripts/uninstall_buttonman.sh
+   sudo bash /turbopy/core/scripts/uninstall_buttonman.sh
 fi
 
 # sudo rm -rf /home/pi/.venv
