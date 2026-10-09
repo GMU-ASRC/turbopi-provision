@@ -65,7 +65,7 @@ source /home/pi/.venv/bin/activate
 uv pip install -e /turbopy/rasadapter
 uv pip install -e /turbopy/core
 
-sudo /turbopy/core/scripts/install_buttonman.sh
+sudo bash /turbopy/core/scripts/install_buttonman.sh
 
 
 # TODO: auto activate environment on startup
