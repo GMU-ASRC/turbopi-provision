@@ -12,7 +12,7 @@ if [ -f ./config ]; then
 fi
 
 H=${H:-'/home/pi'}
-BASHRC={$BASHRC:-"$(realpath $H/.bashrc)"}
+BASHRC=${BASHRC:-"$(realpath $H/.bashrc)"}
 echo $BASHRC
 
 sudo chown :pi $BASHRC
