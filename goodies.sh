@@ -12,8 +12,10 @@ if [ -f ./config ]; then
 fi
 
 H=${H:-'/home/pi'}
-BASHRC={$BASHRC:-$(realpath $H/.bashrc)}
+BASHRC={$BASHRC:-"$(realpath $H/.bashrc)"}
 echo $BASHRC
+
+sudo chown :pi $BASHRC
 
 function update_bashrc {
     LINE=$1  # arg 1
@@ -48,7 +50,7 @@ if ! command -v fish &> /dev/null; then
         curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:4/Debian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_4.gpg > /dev/null
     fi
     sudo apt update
-    sudo apt install fish
+    sudo apt install fish -y
 else
     echo running apt update
     sudo apt update
