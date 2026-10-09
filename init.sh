@@ -50,7 +50,7 @@ fi
 # sudo rm -rf /home/pi/.venv
 uv tool install swig
 echo Creating user virtual environment in /home/pi/.venv
-uv venv /home/pi/.venv --prompt pi --clear
+uv venv /home/pi/.venv --prompt pi --clear --system-site-packages
 
 echo Removing /turbopy/\*\*
 sudo rm -rf /turbopy
@@ -59,7 +59,7 @@ sudo mkdir -p /turbopy
 sudo chown :pi /turbopy
 sudo chmod 775 /turbopy
 echo Creating CORE virtual environment in /turbopy/.venv
-uv venv /turbopy/.venv --prompt CORE --clear
+uv venv /turbopy/.venv --prompt CORE --clear --system-site-packages
 
 echo Cloning turbopi-driver to /turbopy/rasadapter
 git clone https://github.com/GMU-ASRC/turbopi-driver.git /turbopy/rasadapter
