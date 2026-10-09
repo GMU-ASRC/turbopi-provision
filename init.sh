@@ -48,6 +48,7 @@ if [ -f /turbopy/core/scripts/uninstall_buttonman.sh ]; then
 fi
 
 # sudo rm -rf /home/pi/.venv
+uv tool install swig
 echo Creating user virtual environment in /home/pi/.venv
 uv venv /home/pi/.venv --prompt pi --clear
 
