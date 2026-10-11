@@ -85,7 +85,7 @@ echo "updating bashrc with zoxide init"
 update_bashrc "export PATH=\"\$HOME/.local/bin:\$PATH\""  || true
 update_bashrc "eval \"\$(zoxide init bash --cmd cd)\""  || true
 if [ ! -f "$H/.config/fish/conf.d/020-zoxide.fish" ]; then
-	cat "zoxide --fish | source" > "$H/.config/fish/conf.d/020-zoxide.fish"
+	echo "zoxide --fish | source" > "$H/.config/fish/conf.d/020-zoxide.fish"
 fi
 
 # if fzf is not installed, install it
@@ -97,13 +97,13 @@ else
 	echo Skipping fzf as $H/.fzf already exists
 fi
 if [ ! -f "$H/.config/fish/conf.d/021-fzf.fish" ]; then
-	cat "fzf --fish | source" > "$H/.config/fish/conf.d/021-fzf.fish"
+	echo "fzf --fish | source" > "$H/.config/fish/conf.d/021-fzf.fish"
 fi
 
 
 update_bashrc "if [ -d \"$H/.venv\" ]; then source \"$H/.venv/bin/activate\" ; fi"
 if [ ! -f "$H/.config/fish/conf.d/050-pivenv.fish" ]; then
-	cat "source $H/.venv/bin/activate.fish" > "$H/.config/fish/conf.d/050-pivenv.fish"
+	echo "source $H/.venv/bin/activate.fish" > "$H/.config/fish/conf.d/050-pivenv.fish"
 fi
 
 
