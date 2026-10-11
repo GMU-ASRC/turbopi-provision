@@ -100,9 +100,10 @@ if [ ! -f "$H/.config/fish/conf.d/021-fzf.fish" ]; then
 	echo "fzf --fish | source" > "$H/.config/fish/conf.d/021-fzf.fish"
 fi
 
-
+echo "modifying bashrc to source venv on login"
 update_bashrc "if [ -d \"$H/.venv\" ]; then source \"$H/.venv/bin/activate\" ; fi"
 if [ ! -f "$H/.config/fish/conf.d/050-pivenv.fish" ]; then
+    echo "adding fish config for venv activation on login"
 	echo "source $H/.venv/bin/activate.fish" > "$H/.config/fish/conf.d/050-pivenv.fish"
 fi
 
@@ -111,8 +112,8 @@ fi
 # removefrom_bashrc "eval \"\$(zoxide init bash)\""
 # removefrom_bashrc "alias cd=z"
 
-echo adding alias to bat
-update_bashrc "alias bat='batcat'" || true
+# echo adding alias to bat
+# update_bashrc "alias bat='batcat'" || true
 
 echo Installing eza
 sudo apt install eza -y
