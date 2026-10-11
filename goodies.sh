@@ -85,7 +85,7 @@ echo "updating bashrc with zoxide init"
 update_bashrc "export PATH=\"\$HOME/.local/bin:\$PATH\""  || true
 update_bashrc "eval \"\$(zoxide init bash --cmd cd)\""  || true
 if [ ! -f "$H/.config/fish/conf.d/020-zoxide.fish" ]; then
-	echo "zoxide --fish | source" > "$H/.config/fish/conf.d/020-zoxide.fish"
+	echo "zoxide init fish --cmd cd | source" > "$H/.config/fish/conf.d/020-zoxide.fish"
 fi
 
 # if fzf is not installed, install it
