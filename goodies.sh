@@ -20,7 +20,7 @@ sudo chmod 775 $BASHRC
 
 function update_bashrc {
     LINE=$1  # arg 1
-    eval $LINE  # add to current environment
+    # eval $LINE  # add to current environment
     grep -qF -- "$LINE" "$BASHRC"
     RES=$?
     if [ $RES -eq 1 ]; then
