@@ -16,6 +16,7 @@ BASHRC=${BASHRC:-"$(realpath $H/.bashrc)"}
 echo $BASHRC
 
 sudo chown :pi $BASHRC
+sudo chmod 775 $BASHRC
 
 function update_bashrc {
     LINE=$1  # arg 1
