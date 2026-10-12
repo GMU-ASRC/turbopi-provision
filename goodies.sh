@@ -20,7 +20,7 @@ sudo chmod 775 $BASHRC
 
 function update_bashrc {
     LINE=$1  # arg 1
-    # eval $LINE  # add to current environment
+    eval $LINE  # add to current environment
     grep -qF -- "$LINE" "$BASHRC"
     RES=$?
     if [ $RES -eq 1 ]; then
@@ -101,7 +101,7 @@ if [ ! -f "$H/.config/fish/conf.d/021-fzf.fish" ]; then
 fi
 
 echo "modifying bashrc to source venv on login"
-update_bashrc "if [ -d \"$H/.venv\" ]; then source \"$H/.venv/bin/activate\" ; fi"
+update_bashrc "if [ -d \"$H/.venv\" ]; then source \"$H/.venv/bin/activate\" ; fi" || true
 if [ ! -f "$H/.config/fish/conf.d/050-pivenv.fish" ]; then
     echo "adding fish config for venv activation on login"
 	echo "source $H/.venv/bin/activate.fish" > "$H/.config/fish/conf.d/050-pivenv.fish"
@@ -130,11 +130,22 @@ fish -c "alias --save ls 'eza --classify'"
 fish -c "alias --save lls 'ls -lah --sort=size'"
 fish -c "alias --save llt 'ls -lah --sort=time'"
 
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+fish -c "fish_add_path $H/.local/bin"
+
+if [ ! -d "$H/.local/share/omf" ]; then
+    echo "Installing oh-my-fish"
+    curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+else
+    echo "oh-my-fish already installed"
+fi
 fish -c "omf install https://github.com/kenblu24/fishbun.git"
+set -x
 fish -c "set -U default_user $U"
 fish -c "set -U fish_prompt_pwd_full_dirs 3"
 fish -c "set -U fish_prompt_pwd_dir_length 4"
+fish -c "set -U VIRTUAL_ENV_DISABLE_PROMPT 1"
+set +x
+echo "done installing goodies!!!"
 
 # sudo apt install dnsmasq -y
 # sudo systemctl disable dnsmasq
