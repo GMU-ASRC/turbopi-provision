@@ -143,7 +143,7 @@ set -x
 fish -c "set -U default_user $U"
 fish -c "set -U fish_prompt_pwd_full_dirs 3"
 fish -c "set -U fish_prompt_pwd_dir_length 4"
-fish -c "set -U VIRTUAL_ENV_DISABLE_PROMPT 1"
+# fish -c "set -U VIRTUAL_ENV_DISABLE_PROMPT 1"
 set +x
 echo "done installing goodies!!!"
 
