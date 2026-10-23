@@ -13,7 +13,22 @@ main() {
 
     need_cmd git
 
-    git clone https://github.com/GMU-ASRC/turbopi-provision.git "${_ASRC_DIR_DOWNLOAD}"
+    if [ ! -d "${_ASRC_DIR_DOWNLOAD}" ]; then
+        git clone https://github.com/GMU-ASRC/turbopi-provision.git "${_ASRC_DIR_DOWNLOAD}"
+        cd "${_ASRC_DIR_DOWNLOAD}"
+        if [ -n "${_ASRC_BRANCH}" ]; then
+            git switch "${_ASRC_BRANCH}"
+        fi
+    else
+        echo "INFO: Directory ${_ASRC_DIR_DOWNLOAD} already exists."
+        cd "${_ASRC_DIR_DOWNLOAD}"
+        git fetch
+        if [ -n "${_ASRC_BRANCH}" ]; then
+            git switch "${_ASRC_BRANCH}"
+        fi
+        git pull
+    fi
+    echo "INFO: in $(pwd)"
     bash "${_ASRC_DIR_DOWNLOAD}/run_all.sh" "${_ASRC_dl_remaining_args[@]}"
 }
 
@@ -21,17 +36,29 @@ _ASRC_dl_remaining_args=()
 
 parse_args() {
     _ASRC_DEFAULT_DIR_DOWNLOAD="${HOME}/.setupscripts"
+    _ASRC_DEFAULT_BRANCH=""
 
     _ASRC_DIR_DOWNLOAD="${_ASRC_DEFAULT_DIR_DOWNLOAD}"
+    _ASRC_BRANCH="${_ASRC_DEFAULT_BRANCH}"
 
     while [ $# -gt 0 ]; do
         case "$1" in
             --dl-dir)
                 shift
                 _ASRC_DIR_DOWNLOAD="$1"
+                shift
                 ;;
             --dl-dir=*)
                 _ASRC_DIR_DOWNLOAD="${1#*=}"
+                shift
+                ;;
+            -b|--branch)
+                shift
+                _ASRC_BRANCH="$1"
+                shift
+                ;;
+            --branch=*)
+                _ASRC_BRANCH="${1#*=}"
                 shift
                 ;;
             -h|--help)
