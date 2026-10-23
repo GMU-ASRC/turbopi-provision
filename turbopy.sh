@@ -34,9 +34,9 @@ main() {
     # https://loganmarchione.com/2021/07/raspi-configs-mostly-undocumented-non-interactive-mode/
     # of course i find this after figuring out how to do it a different way
     echo Enabling VNC
-    try_sudo raspi-config nonint do_vnc 0  # enable wayvnc
+    do_sudo raspi-config nonint do_vnc 0  # enable wayvnc
     echo Enabling I2C
-    try_sudo raspi-config nonint do_i2c 0  # enable i2c
+    do_sudo raspi-config nonint do_i2c 0  # enable i2c
     # sudo apt install tigervnc-standalone-server
 
     install_uv
