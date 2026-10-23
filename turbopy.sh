@@ -16,6 +16,8 @@ sudo_nopasswd() {
 }
 
 main() {
+    echo "Turbopy install script."
+    echo "Checking for sudo access"
     sudo_nopasswd
     try_sudo apt update
 
