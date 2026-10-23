@@ -16,7 +16,7 @@ main() {
     need_cmd git
 
     git clone https://github.com/kenblu24/turbopi-provision.git "${_ASRC_DIR_DOWNLOAD}"
-
+    bash "${_ASRC_DIR_DOWNLOAD}/run_all.sh"
 }
 
 parse_args() {

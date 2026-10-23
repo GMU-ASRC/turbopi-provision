@@ -7,16 +7,6 @@
 # especially for:
 # parse_args, try_sudo, need_sudo, need_cmd, check_cmd, ensure, assert_nz, err
 
-
-main() {
-    parse_args "$@"
-
-    need_sudo
-
-    need_cmd git
-
-}
-
 _ASRC_remaining_args=()
 
 _ASRC_DEFAULT_SUDO="sudo"

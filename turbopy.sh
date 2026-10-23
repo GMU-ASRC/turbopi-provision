@@ -16,7 +16,6 @@ sudo_nopasswd() {
 }
 
 main() {
-    check_no_remaining_args
     sudo_nopasswd
     try_sudo apt update
 
@@ -117,5 +116,6 @@ install_buttonman() {
 # TODO: custom environment marker perhaps using pi symbol for default env
 
 if [ ! "${_ASRC_nomain}" -eq 0 ]; then
+    check_no_remaining_args
     main "$@"
 fi
