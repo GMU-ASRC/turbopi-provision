@@ -6,7 +6,7 @@ if [ "$(id -u)" -eq 0 ]; then
 fi
 
 if [ ! -f /etc/sudoers.d/020_pi ]; then
-    sudo cat "pi ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/020_pi
+    sudo echo "pi ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/020_pi
 fi
 sudo apt update
 
