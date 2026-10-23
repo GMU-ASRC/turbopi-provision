@@ -134,7 +134,8 @@ fish -c "fish_add_path $H/.local/bin"
 
 if [ ! -d "$H/.local/share/omf" ]; then
     echo "Installing oh-my-fish"
-    curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+    curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install \
+    | fish -C "set -gx NONINTERACTIVE 1"
 else
     echo "oh-my-fish already installed"
 fi
