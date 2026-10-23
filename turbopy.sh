@@ -115,7 +115,7 @@ install_buttonman() {
 
 # TODO: custom environment marker perhaps using pi symbol for default env
 
-if [ ! "${_ASRC_nomain}" -eq 0 ]; then
+if [ ! "${_ASRC_nomain}" = "0" ]; then
     check_no_remaining_args
     main "$@"
 fi
