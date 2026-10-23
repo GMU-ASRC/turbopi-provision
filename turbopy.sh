@@ -112,11 +112,15 @@ install_turbopy() {
     echo Deactivating CORE virtual environment
     deactivate
 
-    echo Activating user virtual environment
-    source /home/pi/.venv/bin/activate
+    activate_user_venv
     echo Installing turbopi-driver and turbopi-coreservices
     do_pip install -e /turbopy/rasadapter
     do_pip install -e /turbopy/core
+}
+
+activate_user_venv() {
+    echo Activating user virtual environment
+    source /home/"${_ASRC_PUSER}"/.venv/bin/activate
 }
 
 install_buttonman() {
