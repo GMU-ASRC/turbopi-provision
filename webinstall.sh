@@ -11,31 +11,21 @@
 main() {
     parse_args "$@"
 
-    need_sudo
-
     need_cmd git
 
-    git clone https://github.com/kenblu24/turbopi-provision.git "${_ASRC_DIR_DOWNLOAD}"
-    bash "${_ASRC_DIR_DOWNLOAD}/run_all.sh"
+    git clone https://github.com/GMU-ASRC/turbopi-provision.git "${_ASRC_DIR_DOWNLOAD}"
+    bash "${_ASRC_DIR_DOWNLOAD}/run_all.sh" "${_ASRC_dl_remaining_args[@]}"
 }
 
+_ASRC_dl_remaining_args=()
+
 parse_args() {
-    _ASRC_DEFAULT_SUDO="sudo"
     _ASRC_DEFAULT_DIR_DOWNLOAD="${HOME}/.setupscripts"
 
-    _ASRC_SUDO="${_ASRC_DEFAULT_SUDO}"
     _ASRC_DIR_DOWNLOAD="${_ASRC_DEFAULT_DIR_DOWNLOAD}"
 
     while [ $# -gt 0 ]; do
         case "$1" in
-            --sudo)
-                shift
-                _ASRC_SUDO="$1"
-                ;;
-            --sudo=*)
-                _ASRC_SUDO="${1#*=}"
-                shift
-                ;;
             --dl-dir)
                 shift
                 _ASRC_DIR_DOWNLOAD="$1"
@@ -49,34 +39,13 @@ parse_args() {
                 exit 0
                 ;;
             *)
-                err "unknown argument: $1"
+                _ASRC_dl_remaining_args+=("$1")
+                shift
+                # err "unknown argument: $1"
                 ;;
         esac
     done
 }
-
-
-try_sudo() {
-    if "$@" >/dev/null 2>&1; then
-        return 0
-    fi
-
-    need_sudo
-    "${_ASRC_SUDO}" "$@"
-}
-
-need_sudo() {
-    if ! check_cmd "${_ASRC_SUDO}"; then
-        err "\
-could not find the command \`${_ASRC_SUDO}\` needed to get permissions for install.
-"
-    fi
-
-    if ! "${_ASRC_SUDO}" -v; then
-        err "sudo permissions not granted, aborting installation"
-    fi
-}
-
 
 
 need_cmd() {

@@ -45,6 +45,9 @@ main() {
     remove_turbopy
     install_turbopy
     install_buttonman
+    echo "======================="
+    echo "Done installing turbopy"
+    echo "======================="
 }
 
 
