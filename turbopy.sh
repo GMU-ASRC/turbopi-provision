@@ -1,11 +1,7 @@
 #!/bin/bash
 
-if [ "$(id -u)" -eq 0 ]; then
-        echo 'This script should not be run by root' >&2
-        exit 1
-fi
-
 source ./common.sh
+assert_not_root
 parse_common_args "$@"
 
 sudo_nopasswd() {

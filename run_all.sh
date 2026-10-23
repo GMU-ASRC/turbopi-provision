@@ -4,3 +4,7 @@ source ./goodies.sh
 double_deactivate
 activate_user_venv
 source_if_exists ./continue.sh
+
+echo "-------------------------"
+echo "All done!"
+echo

@@ -8,13 +8,17 @@
 # parse_args, try_sudo, need_sudo, need_cmd, check_cmd, ensure, assert_nz, err
 
 _ASRC_remaining_args=()
+_ASRC_common_args_parsed="${_ASRC_common_args_parsed:-''}"
 
 _ASRC_DEFAULT_SUDO="sudo"
 _ASRC_DEFAULT_PUSER="pi"
-_ASRC_nomain=''
+_ASRC_nomain="${_ASRC_nomain:-''}"
 
 # https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 parse_common_args() {
+    if [ "$_ASRC_common_args_parsed" = "0" ]; then
+        return 0
+    fi
 
     _ASRC_SUDO="${_ASRC_DEFAULT_SUDO}"
     _ASRC_DIR_DOWNLOAD="${_ASRC_DEFAULT_DIR_DOWNLOAD}"
@@ -65,6 +69,7 @@ parse_common_args() {
                 ;;
         esac
     done
+    _ASRC_common_args_parsed="0"
 }
 
 check_no_remaining_args() {
@@ -151,6 +156,11 @@ check_cmd() {
     command -v -- "$1" >/dev/null 2>&1
 }
 
+remote_branch_exists() {
+    git ls-remote --exit-code --heads origin "$1" >/dev/null 2>&1
+    return $?
+}
+
 # Run a command that should never fail. If the command fails execution
 # will immediately terminate with an error showing the failing
 # command.
@@ -160,6 +170,13 @@ ensure() {
 
 assert_nz() {
     if [ -z "$1" ]; then err "found empty string: $2"; fi
+}
+
+assert_not_root() {
+    if [ "$(id -u)" -eq 0 ]; then
+        err 'This script should not be run by root'
+    fi
+    return 0
 }
 
 err() {
