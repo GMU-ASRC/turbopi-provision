@@ -12,7 +12,8 @@ sudo_nopasswd() {
     assert_nz "${_ASRC_PUSER}" "_ASRC_PUSER"
     if [ ! -f /etc/sudoers.d/020_"${_ASRC_PUSER}" ]; then
         echo "INFO: Adding ${_ASRC_PUSER} to sudoers"
-        ensure try_sudo echo "${_ASRC_PUSER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/020_"${_ASRC_PUSER}"
+        ensure echo "${_ASRC_PUSER} ALL=(ALL) NOPASSWD: ALL" \
+        | ensure try_sudo tee /etc/sudoers.d/020_"${_ASRC_PUSER}" > /dev/null
     fi
     if [ ! -f /etc/sudoers.d/020_"${_ASRC_PUSER}" ]; then
         echo "WARNING: Could not create /etc/sudoers.d/020_${_ASRC_PUSER}"
