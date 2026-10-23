@@ -7,6 +7,9 @@ fi
 
 set -e  # exit on error
 
+# TODO: make everything into a function
+# TODO: use config for user and paths
+
 if [ -f ./config ]; then
     source ./config
 fi
