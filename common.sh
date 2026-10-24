@@ -100,7 +100,11 @@ could not find the command \`${_ASRC_SUDO}\` needed to get permissions for insta
 "
     fi
 
-    if ! "${_ASRC_SUDO}" -nv; then
+    if "${_ASRC_SUDO}" -Nn echo> /dev/null 2>&1; then
+        return 0
+    fi
+
+    if ! "${_ASRC_SUDO}" -v; then
         err "sudo permissions not granted, aborting installation"
     fi
 }
