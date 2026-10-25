@@ -10,9 +10,7 @@ set -e  # exit on error
 # TODO: make everything into a function
 # TODO: use config for user and paths
 
-if [ -f ./config ]; then
-    source ./config
-fi
+source ./common.sh
 
 H=${H:-'/home/pi'}
 BASHRC=${BASHRC:-"$(realpath $H/.bashrc)"}
@@ -138,7 +136,7 @@ fish -c "fish_add_path $H/.local/bin"
 if [ ! -d "$H/.local/share/omf" ]; then
     echo "Installing oh-my-fish"
     curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install \
-    | fish -C "set -gx NONINTERACTIVE 1"
+    | fish -C "set -gx NONINTERACTIVE 1"  # avoid trap at end of install script
 else
     echo "oh-my-fish already installed"
 fi
@@ -148,8 +146,15 @@ fish -c "set -U default_user $U"
 fish -c "set -U fish_prompt_pwd_full_dirs 3"
 fish -c "set -U fish_prompt_pwd_dir_length 4"
 fish -c "set -U VIRTUAL_ENV_DISABLE_PROMPT 1"
+source_if_exists /turbopy/core/scripts/add_fish_aliases.sh
 set +x
+if [ grep -qF "/usr/bin/fish" /etc/shells ]; then
+    do_sudo chsh -s /usr/bin/fish
+    echo "fish shell set as default shell"
+fi
+echo "--------------------------"
 echo "done installing goodies!!!"
+echo "--------------------------"
 
 # sudo apt install dnsmasq -y
 # sudo systemctl disable dnsmasq

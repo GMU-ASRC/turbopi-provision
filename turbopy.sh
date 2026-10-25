@@ -43,6 +43,10 @@ main() {
     do_sudo raspi-config nonint do_i2c 0  # enable i2c
     # sudo apt install tigervnc-standalone-server
 
+    command -v batt > /dev/null \
+    && command -v stop > /dev/null
+    _ASRC_ALIASES_ALREADY_INSTALLED=$?
+
     install_uv
     double_deactivate
     uninstall_buttonman
