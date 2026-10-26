@@ -221,7 +221,9 @@ goodies_aliases() {
     fish -c "set -U fish_prompt_pwd_dir_length 4"
     fish -c "set -U VIRTUAL_ENV_DISABLE_PROMPT 1"
     # add fish aliases provided by turbopy services i.e. stop, batt
-    source_if_exists /turbopy/core/scripts/add_fish_aliases.sh
+    if [ -f /turbopy/core/scripts/add_fish_aliases.sh ]; then
+        do_sudo source /turbopy/core/scripts/add_fish_aliases.sh $U
+    fi
     set +x
     # set fish as default shell
     if grep -qF -- "/usr/bin/fish" /etc/shells ; then
