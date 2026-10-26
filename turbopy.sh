@@ -9,7 +9,7 @@ sudo_nopasswd() {
     if [ ! -f /etc/sudoers.d/020_"${_ASRC_PUSER}" ]; then
         echo "INFO: Adding ${_ASRC_PUSER} to sudoers"
         ensure echo "${_ASRC_PUSER} ALL=(ALL) NOPASSWD: ALL" \
-        | ensure try_sudo tee /etc/sudoers.d/020_"${_ASRC_PUSER}" > /dev/null
+        | ensure do_sudo tee /etc/sudoers.d/020_"${_ASRC_PUSER}" > /dev/null
     fi
     if [ ! -f /etc/sudoers.d/020_"${_ASRC_PUSER}" ]; then
         echo "WARNING: Could not create /etc/sudoers.d/020_${_ASRC_PUSER}"
@@ -21,7 +21,7 @@ main() {
     echo "Checking for sudo access"
     sudo_nopasswd
     echo "INFO: Updating package index"
-    try_sudo apt update
+    do_sudo apt update
 
     set -e  # exit on error
 
@@ -42,6 +42,10 @@ main() {
     echo Enabling I2C
     do_sudo raspi-config nonint do_i2c 0  # enable i2c
     # sudo apt install tigervnc-standalone-server
+
+    command -v batt > /dev/null \
+    && command -v stop > /dev/null
+    _ASRC_ALIASES_ALREADY_INSTALLED=$?
 
     install_uv
     double_deactivate
@@ -89,9 +93,9 @@ install_turbopy() {
     do_venv /home/"${_ASRC_PUSER}"/.venv --prompt "${_ASRC_PUSER}" --clear --system-site-packages
 
     echo Creating /turbopy
-    try_sudo mkdir -p /turbopy
-    try_sudo chown :"${_ASRC_PUSER}" /turbopy
-    try_sudo chmod 775 /turbopy
+    do_sudo mkdir -p /turbopy
+    do_sudo chown :"${_ASRC_PUSER}" /turbopy
+    do_sudo chmod 775 /turbopy
     echo Creating CORE virtual environment in /turbopy/.venv
     do_venv /turbopy/.venv --prompt CORE --clear --system-site-packages
 

@@ -40,9 +40,11 @@ This software has only been tested on the following hardware and software setup:
       * Enable SSH: Yes
           * Authentication mechanism: <kbd><samp>Use password authentication</samp></kbd>
 2. Insert the microSD card into the Raspberry Pi. You'll need to undo the four screws on the metal ultrasonic sensor cover to access the micro SD card on the Raspberry Pi.
-    > [!TIP]
-    > The micro SD card slot is on the bottom of the Raspberry Pi and may be hard to see.
-    > When inserting the micro SD card, the gold contacts should face upwards, towards the green PCB. Be gentle.
+    
+  > [!TIP]
+  > The micro SD card slot is on the bottom of the Raspberry Pi and may be hard to see.
+  > When inserting the micro SD card, the gold contacts should face upwards, towards the green PCB. Be gentle.
+
 3. Insert two 18650 batteries into the bottom of the TurboPi. Make sure to heed the polarity indicator in the battery tray. Once inserted, we recommend using a battery cover.
 4. Turn on the TurboPi. There are two switches that both must be in the "on" position:
     * The battery tray under the TurboPi has a switch.
@@ -51,7 +53,7 @@ This software has only been tested on the following hardware and software setup:
 5. Connect the Pi via ethernet or WiFi (previously configured in step 1).
 6. SSH into the pi using the username and hostname you setup in step 1:
 
-    <kbd>ssh <samp>USERNAME</samp>@<samp>HOSTNAME</samp>.local</kbd>
+    <kbd>ssh <samp><kbd>USERNAME</kbd></samp>@<samp><kbd>HOSTNAME</kbd></samp>.local</kbd>
 
     Note: Depending on your router, you may need to remove the `.local` suffix from the hostname. (networks with MDNS/Bonjour support will work with `.local`, but some routers will support automatic hostname registration without the suffix. You can also try `.lan`).  
     MacOS users will not be able to connect to the Pi via SSH without a suffix.
@@ -60,6 +62,7 @@ This software has only been tested on the following hardware and software setup:
     ```bash
     curl -sSL https://raw.githubusercontent.com/GMU-ASRC/turbopi-provision/main/webinstall.sh | bash -s - 
     ```
-    > [!IMPORTANT]
-    > The above link is for the MAIN BRANCH!  
-    > Please see the [wiki](https://github.com/GMU-ASRC/turbopi-provision/wiki/Branches) for a list of install URLs for the different flavors of our software.
+
+  > [!IMPORTANT]
+  > The above link is for the MAIN BRANCH!  
+  > Please see the [wiki](https://github.com/GMU-ASRC/turbopi-provision/wiki/Branches) for a list of install URLs for the different flavors of our software.
