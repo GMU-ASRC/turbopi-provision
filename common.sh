@@ -160,9 +160,38 @@ check_cmd() {
     command -v -- "$1" >/dev/null 2>&1
 }
 
+append_line() {
+    local FILE=$1  # file path to append to
+    local LINE=$2  # line to append
+    local PATTERN="$3"  # optional pattern to match lines to remove
+    eval $LINE  # add to current environment
+    grep -qF -- "$LINE" "$FILE" || return 0
+    if [ -n "$PATTERN" ]; then
+        remove_lines "$FILE" "$PATTERN"
+    fi
+    echo "$LINE" >> "$FILE"
+}
+
+remove_lines() {
+    local FILE=$1  # file path to append to
+    local PATTERN=$2  # pattern to match lines to remove
+    grep -vF -- "$PATTERN" "$FILE" > _asrc_temp && mv _asrc_temp "$FILE"
+}
+
 remote_branch_exists() {
     git ls-remote --exit-code --heads origin "$1" >/dev/null 2>&1
     return $?
+}
+
+ensure_localbin() {  # ensures ~/.local/bin exists and is in PATH
+    if [ ! -d "$HOME/.local/bin" ]; then
+        echo "Creating $HOME/.local/bin"
+        mkdir -p "$HOME/.local/bin"
+    fi
+    if ! echo "$PATH" | grep -qF "$HOME/.local/bin"; then
+        echo "Prepending $HOME/.local/bin to PATH"
+        export PATH="$HOME/.local/bin:$PATH"
+    fi
 }
 
 # Run a command that should never fail. If the command fails execution
