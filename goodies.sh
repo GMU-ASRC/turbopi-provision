@@ -222,7 +222,7 @@ goodies_aliases() {
     fish -c "set -U VIRTUAL_ENV_DISABLE_PROMPT 1"
     # add fish aliases provided by turbopy services i.e. stop, batt
     if [ -f /turbopy/core/scripts/add_fish_aliases.sh ]; then
-        do_sudo source /turbopy/core/scripts/add_fish_aliases.sh $U
+        sudo -s source /turbopy/core/scripts/add_fish_aliases.sh $U
     fi
     set +x
     # set fish as default shell
