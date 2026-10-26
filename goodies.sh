@@ -148,7 +148,7 @@ fish -c "set -U fish_prompt_pwd_dir_length 4"
 fish -c "set -U VIRTUAL_ENV_DISABLE_PROMPT 1"
 source_if_exists /turbopy/core/scripts/add_fish_aliases.sh
 set +x
-if [ grep -qF "/usr/bin/fish" /etc/shells ]; then
+if grep -qF -- "/usr/bin/fish" /etc/shells ; then
     do_sudo chsh -s /usr/bin/fish
     echo "fish shell set as default shell"
 fi
