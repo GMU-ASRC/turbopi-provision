@@ -56,6 +56,7 @@ parse_goodies_args() {
                 ;;
             *)
                 _ASRC_remaining_args+=("$1")
+                shift
                 ;;
         esac
     done
