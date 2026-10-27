@@ -27,11 +27,11 @@ parse_setname_args() {
                 ;;
             --prefix)
                 shift
-                PREFIX="$1"
+                ROBOT_NAME_PREFIX="$1"
                 shift
                 ;;
             --prefix=*)
-                PREFIX="${1#*=}"
+                ROBOT_NAME_PREFIX="${1#*=}"
                 shift
                 ;;
             --connection)
@@ -157,20 +157,24 @@ whiptail_choose_connection() {
         fi
         options+=( "$whiptail_desc" )
     done
-    _ASRC_CONNECTION=$(whiptail --menu "Choose a connection to modify the IP address of" 30 60 10 "${options[@]}" 3>&1 1>&2 2>&3)
+    _ASRC_CONNECTION=$(whiptail --menu --nocancel \
+"Choose a connection to modify the IP address of" 30 60 10 "${options[@]}" 3>&1 1>&2 2>&3)
     echo "$_ASRC_CONNECTION"
 }
 
 whiptail_input_suffix() {
     local
     while true; do
-        suffix=$(whiptail --inputbox "Enter the number of the robot (0-$MAX_ROBOT_SUFFIX)" 30 60 3>&1 1>&2 2>&3)
-        suffix=$(format_suffix_number "$suffix")
-        if [ $? -ne 0 ]; then
-            whiptail --msgbox "Please enter a valid suffix number." 30 60
+        suffix=$(whiptail --inputbox "Enter the number of the robot (0-$MAX_ROBOT_SUFFIX)" 8 30 3>&1 1>&2 2>&3)
+        if [ "$?" -ne "0" ]; then
+            return 1
+        fi
+        suffix=$(strip_lead_zeros "$suffix")
+        if [ "$?" -ne "0" ]; then
+            (whiptail --msgbox "Please enter a valid suffix number." 30 60 3>&1 1>&2 2>&3)
             continue
-        elif [ $suffixi -lt 0 -o $suffixi -gt $MAX_ROBOT_SUFFIX ]; then
-            whiptail --msgbox "Suffix must be between 0 and $MAX_ROBOT_SUFFIX." 30 60
+        elif [ "$suffixi" -lt "0" -o "$suffixi" -gt "$MAX_ROBOT_SUFFIX" ]; then
+            (whiptail --msgbox "Suffix must be between 0 and $MAX_ROBOT_SUFFIX." 30 60 3>&1 1>&2 2>&3)
             continue
         fi
         break
@@ -178,11 +182,11 @@ whiptail_input_suffix() {
     echo "$suffix"
 }
 
-format_suffix_number() {
+strip_lead_zeros() {
     local suffixi
     declare -i suffixi
     if [ -z "$1" ]; then
-        echo "No suffix number entered"
+        echo "No suffix number entered" >&2
         return 1
     fi
     # https://stackoverflow.com/questions/11123717/removing-leading-zeros-before-passing-a-shell-variable-to-another-command
@@ -191,7 +195,7 @@ format_suffix_number() {
 }
 
 format_robot_name_from_number() {
-    echo $PREFIX$(printf "%02d" $1)
+    echo $ROBOT_NAME_PREFIX$(printf "%02d" $1)
 }
 
 calculate_new_ip_from_suffix() {
@@ -243,7 +247,7 @@ whiptail_menu() {
     whiptail --yesno "\
 Would you like to rename the suffix of this robot?\n\
 Current persistent hostname: $phostname$afterreboot\n\
-" 20 60
+" 10 60
     return $?
 }
 
@@ -300,16 +304,21 @@ main() {
     local suffix
 
     suffix="$(whiptail_input_suffix)"
+    if [ "$?" -ne "0" ]; then
+        return 1
+    fi
     if [ -z "$CONNECTION" ]; then
         local connection_was_empty=0
         CONNECTION="$(whiptail_choose_connection)"
     fi
     calculate_new_ip_from_suffix $suffix
     whiptail_confirm_correct
-    if [ "$?" -eq "1" ]; then
+    if [ "$?" -ne "0" ]; then
         if [ "$connection_was_empty" -eq "0" ]; then CONNECTION=''; fi
         main
+        return $?
     fi
+    # do_rename_robot $suffix
     whiptail_reboot_reminder
     echo
 }
