@@ -1,8 +1,6 @@
 source ./common.sh
 
-if [ $(hostname) ~= "raspberrypi|turbopi\s*$|turbopi-000?\s*$" ]; then
-    source ./set_hostname.sh
-fi
+source ./set_name_ip.sh --skip_non_default
 
 if remote_branch_exists asrc; then
     _ASRC_HOME_BRANCH=asrc
