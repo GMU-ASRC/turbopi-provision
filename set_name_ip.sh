@@ -171,10 +171,10 @@ whiptail_input_suffix() {
         fi
         suffix=$(strip_lead_zeros "$suffix")
         if [ "$?" -ne "0" ]; then
-            (whiptail --msgbox "Please enter a valid suffix number." 30 60 3>&1 1>&2 2>&3)
+            (whiptail --msgbox "Please enter a valid suffix number." 8 50 3>&1 1>&2 2>&3)
             continue
         elif [ "$suffixi" -lt "0" -o "$suffixi" -gt "$MAX_ROBOT_SUFFIX" ]; then
-            (whiptail --msgbox "Suffix must be between 0 and $MAX_ROBOT_SUFFIX." 30 60 3>&1 1>&2 2>&3)
+            (whiptail --msgbox "Suffix must be between 0 and $MAX_ROBOT_SUFFIX." 8 50 3>&1 1>&2 2>&3)
             continue
         fi
         break
@@ -247,7 +247,7 @@ whiptail_menu() {
     whiptail --yesno "\
 Would you like to rename the suffix of this robot?\n\
 Current persistent hostname: $phostname$afterreboot\n\
-" 10 60
+" 8 60
     return $?
 }
 
