@@ -157,14 +157,14 @@ whiptail_choose_connection() {
         fi
         options+=( "$whiptail_desc" )
     done
-    _ASRC_CONNECTION=$(whiptail --menu "Choose a connection to modify the IP address of" 30 60 10 "${options[@]}")
+    _ASRC_CONNECTION=$(whiptail --menu "Choose a connection to modify the IP address of" 30 60 10 "${options[@]}" 3>&1 1>&2 2>&3)
     echo "$_ASRC_CONNECTION"
 }
 
 whiptail_input_suffix() {
     local
     while true; do
-        suffix=$(whiptail --inputbox "Enter the number of the robot (0-$MAX_ROBOT_SUFFIX)" 30 60)
+        suffix=$(whiptail --inputbox "Enter the number of the robot (0-$MAX_ROBOT_SUFFIX)" 30 60 3>&1 1>&2 2>&3)
         suffix=$(format_suffix_number "$suffix")
         if [ $? -ne 0 ]; then
             whiptail --msgbox "Please enter a valid suffix number." 30 60
@@ -313,6 +313,7 @@ main() {
     whiptail_reboot_reminder
     echo
 }
+
 
 if [ ! "${_ASRC_nomain}" = "0" ]; then
     if [ "${_ASRC_PROMPT_DEFAULT_NAME}" = "0" ] && ! is_default_hostname ; then
