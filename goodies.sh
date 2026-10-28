@@ -14,12 +14,6 @@ source ./common.sh
 
 parse_common_args "$@"
 
-_ASRC_APT_UPDATED=1
-
-local _remaining_args_temp=("${_ASRC_remaining_args[@]}")
-_ASRC_remaining_args=()
-parse_goodies_args "${_remaining_args_temp[@]}"
-
 parse_goodies_args() {
     U=${U:-"$USER"}
     H=${H:-"/home/$U"}
@@ -71,6 +65,12 @@ parse_goodies_args() {
     sudo chmod 775 $BASHRC
 
 }
+
+_ASRC_APT_UPDATED=1
+
+_remaining_args_temp=("${_ASRC_remaining_args[@]}")
+_ASRC_remaining_args=()
+parse_goodies_args "${_remaining_args_temp[@]}"
 
 
 main() {
