@@ -24,6 +24,11 @@ _ASRC_nomain="${_ASRC_nomain:-''}"
 # https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 parse_common_args() {
     if [ "$_ASRC_common_args_parsed" = "0" ]; then
+        while [ $# -gt 0 ]; do
+            _ASRC_remaining_args+=( "$1" )
+            shift
+            ;;
+        done
         return 0
     fi
 
