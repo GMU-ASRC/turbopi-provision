@@ -7,6 +7,10 @@
 # especially for:
 # parse_args, try_sudo, need_sudo, need_cmd, check_cmd, ensure, assert_nz, err
 
+
+# TODO: nonint mode
+# TODO: set flag if run_all, then do arg checks after
+
 _ASRC_remaining_args=()
 _ASRC_common_args_parsed="${_ASRC_common_args_parsed:-''}"
 

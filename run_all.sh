@@ -14,4 +14,5 @@ if ! [ "$_ASRC_ALIASES_ALREADY_INSTALLED" = "0" ]; then
     echo "restart your shell or re-login to the device."
     echo "Or, you can run:"
     echo "    source ~/.bashrc"
+
 fi
