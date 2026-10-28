@@ -326,10 +326,14 @@ main() {
 
 if [ ! "${_ASRC_nomain}" = "0" ]; then
     if [ "${_ASRC_PROMPT_DEFAULT_NAME}" = "0" ] && ! is_default_hostname ; then
+        echo "Current static/persistent hostname does not match any default hostnames."
+        echo "Assuming no change needed. Please cd to your setup scripts dir and run"
+        echo "bash ./set_name_ip.sh"
+        echo "if you would like to change it later."
         return 0
     fi
     whiptail_menu
     if [ $? -eq "0" ]; then
-        main "$@"
+        main
     fi
 fi
