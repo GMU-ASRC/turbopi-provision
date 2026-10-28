@@ -76,7 +76,7 @@ install_home_repo() {
 
 install_asrc_module() {
     cd $HOME
-    do_pip install -e asrc
+    do_pip install -e turboswarmlib
 }
 
 if [ ! "${_ASRC_nomain}" = "0" ]; then
