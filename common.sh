@@ -11,7 +11,7 @@
 # TODO: nonint mode
 # TODO: set flag if run_all, then do arg checks after
 
-if ! declare -p _ASRC_remaining_args; then
+if ! declare -p _ASRC_remaining_args>/dev/null 2>&1; then
     # for some reason this sometimes clears the variable
     declare -a _ASRC_remaining_args
 fi
