@@ -214,17 +214,18 @@ goodies_aliases() {
     else
         echo "oh-my-fish already installed"
     fi
+    echo "Installing fishbun fish theme"
     fish -c "omf install https://github.com/kenblu24/fishbun.git"
-    set -x
+
+    echo "setting fishbun theme options"
     fish -c "set -U default_user $U"
     fish -c "set -U fish_prompt_pwd_full_dirs 3"
     fish -c "set -U fish_prompt_pwd_dir_length 4"
     fish -c "set -U VIRTUAL_ENV_DISABLE_PROMPT 1"
-    # add fish aliases provided by turbopy services i.e. stop, batt
     if [ -f /turbopy/core/scripts/add_fish_aliases.sh ]; then
+        echo "adding fish turbopy aliases for services i.e. stop, batt"
         sudo -s source /turbopy/core/scripts/add_fish_aliases.sh $U
     fi
-    set +x
     # set fish as default shell
     if grep -qF -- "/usr/bin/fish" /etc/shells ; then
         do_sudo chsh -s /usr/bin/fish
