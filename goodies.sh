@@ -5,7 +5,7 @@ if [ "$(id -u)" -eq 0 ]; then
         exit 1
 fi
 
-set -e  # exit on error
+# set -e  # exit on error
 
 # TODO: make everything into a function
 # TODO: use config for user and paths
@@ -15,6 +15,10 @@ source ./common.sh
 parse_common_args "$@"
 
 _ASRC_APT_UPDATED=1
+
+local _remaining_args_temp=("${_ASRC_remaining_args[@]}")
+_ASRC_remaining_args=()
+parse_goodies_args "${_remaining_args_temp[@]}"
 
 parse_goodies_args() {
     U=${U:-"$USER"}
@@ -70,10 +74,6 @@ parse_goodies_args() {
 
 
 main() {
-
-    local _remaining_args_temp=("${_ASRC_remaining_args[@]}")
-    _ASRC_remaining_args=()
-    parse_goodies_args "${_remaining_args_temp[@]}"
 
     echo "Installing goodies"
     install_fish
@@ -194,7 +194,6 @@ goodies_aliases() {
     # update_bashrc "alias bat='batcat'" || true
 
     echo Adding ls/eza aliases to .bashrc
-    set +e
     update_bashrc "if command -v eza &> /dev/null ; then alias ls='eza' ; else alias ls='ls --color --classify --human-readable' ; fi"
     update_bashrc "alias la='ls -Ah'"
     update_bashrc "alias ll='ls -laF'"
@@ -228,7 +227,7 @@ goodies_aliases() {
     fi
     # set fish as default shell
     if grep -qF -- "/usr/bin/fish" /etc/shells ; then
-        do_sudo chsh -s /usr/bin/fish
+        do_sudo chsh -s /usr/bin/fish $U
         echo "fish shell set as default shell"
     fi
 }
