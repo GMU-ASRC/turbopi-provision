@@ -298,8 +298,7 @@ Current persistent hostname: $phostname$afterreboot\n\
     return $?
 }
 
-
-main() {
+interactive_rename() {
     echo "Prompting for new suffix"
     local suffix
 
@@ -315,7 +314,7 @@ main() {
     whiptail_confirm_correct
     if [ "$?" -ne "0" ]; then
         if [ "$connection_was_empty" -eq "0" ]; then CONNECTION=''; fi
-        main
+        interactive_rename
         return $?
     fi
     # do_rename_robot $suffix
@@ -323,8 +322,7 @@ main() {
     echo
 }
 
-
-if [ ! "${_ASRC_nomain}" = "0" ]; then
+main() {
     if [ "${_ASRC_PROMPT_DEFAULT_NAME}" = "0" ] && ! is_default_hostname ; then
         echo "Current static/persistent hostname does not match any default hostnames."
         echo "Assuming no change needed. Please cd to your setup scripts dir and run"
@@ -334,6 +332,11 @@ if [ ! "${_ASRC_nomain}" = "0" ]; then
     fi
     whiptail_menu
     if [ $? -eq "0" ]; then
-        main
+        interactive_rename
     fi
+}
+
+
+if [ ! "${_ASRC_nomain}" = "0" ]; then
+    main
 fi
