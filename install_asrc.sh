@@ -4,7 +4,38 @@ source ./config
 assert_not_root
 parse_common_args "$@"
 
-_ASRC_HOME_BRANCH="${_ASRC_HOME_BRANCH:-main}"
+ASRC_HOME_BRANCH="${ASRC_HOME_BRANCH:-main}"
+
+parse_setname_args() {
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --home-branch)
+                shift
+                ASRC_HOME_BRANCH="$1"
+                shift
+                ;;
+            --home-branch=*)
+                ASRC_HOME_BRANCH="${1#*=}"
+                shift
+                ;;
+            -h|--help)
+                usage
+                exit 0
+                ;;
+            *)
+                _ASRC_remaining_args+=("$1")
+                shift
+                ;;
+        esac
+    done
+    _ASRC_install_asrc_args_parsed=0
+}
+
+if [ "$_ASRC_install_asrc_args_parsed" -ne "0" ]; then
+    _remaining_args_temp="${_ASRC_remaining_args[@]}"
+    _ASRC_remaining_args=()
+    parse_install_asrc_args "${_remaining_args_temp[@]}"
+fi
 
 main() {
     need_cmd git
@@ -31,14 +62,14 @@ clean_repos() {
 
 install_home_repo() {
     cd $HOME
-    assert_nz "${_ASRC_HOME_BRANCH}"
+    assert_nz "${ASRC_HOME_BRANCH}"
     git config --global pull.ff only
-    git init -b "${_ASRC_HOME_BRANCH}"
+    git init -b "${ASRC_HOME_BRANCH}"
     git remote add origin https://github.com/GMU-ASRC/turbopi-root.git
     git fetch
-    git reset origin/"${_ASRC_HOME_BRANCH}" --hard
-    git branch -u origin/"${_ASRC_HOME_BRANCH}" "${_ASRC_HOME_BRANCH}"
-    git switch "${_ASRC_HOME_BRANCH}" --force
+    git reset origin/"${ASRC_HOME_BRANCH}" --hard
+    git branch -u origin/"${ASRC_HOME_BRANCH}" "${ASRC_HOME_BRANCH}"
+    git switch "${ASRC_HOME_BRANCH}" --force
     git pull
 
     git submodule update --init --recursive
@@ -50,6 +81,5 @@ install_asrc_module() {
 }
 
 if [ ! "${_ASRC_nomain}" = "0" ]; then
-    check_no_remaining_args
     main "$@"
 fi
