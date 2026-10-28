@@ -176,7 +176,7 @@ append_line() {
     local LINE=$2  # line to append
     local PATTERN="$3"  # optional pattern to match lines to remove
     eval $LINE  # add to current environment
-    grep -qF -- "$LINE" "$FILE" || return 0
+    grep -qF -- "$LINE" "$FILE" && return 0
     if [ -n "$PATTERN" ]; then
         remove_lines "$FILE" "$PATTERN"
     fi
