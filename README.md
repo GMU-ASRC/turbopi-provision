@@ -60,7 +60,7 @@ This software has only been tested on the following hardware and software setup:
 7. Run the following commands to install the GMU-ASRC drivers and services:
 
     ```bash
-    curl -sSL https://raw.githubusercontent.com/GMU-ASRC/turbopi-provision/main/webinstall.sh | bash -s - 
+    curl -sSL https://raw.githubusercontent.com/GMU-ASRC/turbopi-provision/main/webinstall.sh | bash -s -- -b main
     ```
 
   > [!IMPORTANT]
