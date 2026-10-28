@@ -27,7 +27,6 @@ parse_common_args() {
         while [ $# -gt 0 ]; do
             _ASRC_remaining_args+=( "$1" )
             shift
-            ;;
         done
         return 0
     fi
