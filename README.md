@@ -4,7 +4,7 @@ This repository contains scripts for adding GMU-ASRC drivers and services to
 a Raspberry Pi-equipped Hiwonder TurboPi.
 
 > [!IMPORTANT]
-> This is the MAIN BRANCH!  
+> This is the ASRC BRANCH!  
 > Please see the [wiki](https://github.com/GMU-ASRC/turbopi-provision/wiki/Branches) for a list of install URLs for the different flavors of our software.
 
 
@@ -60,9 +60,9 @@ This software has only been tested on the following hardware and software setup:
 7. Run the following commands to install the GMU-ASRC drivers and services:
 
     ```bash
-    curl -sSL https://raw.githubusercontent.com/GMU-ASRC/turbopi-provision/main/webinstall.sh | bash -s -- -b main
+    curl -sSL https://raw.githubusercontent.com/GMU-ASRC/turbopi-provision/main/webinstall.sh | bash -s -- -b asrc --home-branch asrc
     ```
 
   > [!IMPORTANT]
-  > The above link is for the MAIN BRANCH!  
+  > The above link is for the ASRC BRANCH!  
   > Please see the [wiki](https://github.com/GMU-ASRC/turbopi-provision/wiki/Branches) for a list of install URLs for the different flavors of our software.
