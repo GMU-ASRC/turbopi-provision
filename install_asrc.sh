@@ -1,12 +1,11 @@
 #!/bin/bash
-
-source ./config
+source ./common.sh
 assert_not_root
 parse_common_args "$@"
 
 ASRC_HOME_BRANCH="${ASRC_HOME_BRANCH:-main}"
 
-parse_setname_args() {
+parse_install_asrc_args() {
     while [ $# -gt 0 ]; do
         case "$1" in
             --home-branch)
@@ -31,11 +30,11 @@ parse_setname_args() {
     _ASRC_install_asrc_args_parsed=0
 }
 
-if [ "$_ASRC_install_asrc_args_parsed" -ne "0" ]; then
-    _remaining_args_temp="${_ASRC_remaining_args[@]}"
-    _ASRC_remaining_args=()
-    parse_install_asrc_args "${_remaining_args_temp[@]}"
-fi
+
+_remaining_args_temp=("${_ASRC_remaining_args[@]}")
+_ASRC_remaining_args=()
+parse_install_asrc_args "${_remaining_args_temp[@]}"
+
 
 main() {
     need_cmd git

@@ -103,7 +103,7 @@ parse_setname_args() {
 
 
 if [ "$_ASRC_set_name_ip_args_parsed" -ne "0" ]; then
-    _remaining_args_temp="${_ASRC_remaining_args[@]}"
+    _remaining_args_temp=("${_ASRC_remaining_args[@]}")
     _ASRC_remaining_args=()
     parse_setname_args "${_remaining_args_temp[@]}"
 fi
