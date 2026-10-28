@@ -81,5 +81,5 @@ install_asrc_module() {
 }
 
 if [ ! "${_ASRC_nomain}" = "0" ]; then
-    main "$@"
+    main
 fi
