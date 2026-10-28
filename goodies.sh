@@ -242,6 +242,5 @@ goodies_aliases() {
 # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 if [ ! "${_ASRC_nomain}" = "0" ]; then
-    check_no_remaining_args
     main
 fi
