@@ -71,9 +71,9 @@ parse_goodies_args() {
 
 main() {
 
-    local _remaining_args_temp=_ASRC_remaining_args
+    local _remaining_args_temp=("${_ASRC_remaining_args[@]}")
     _ASRC_remaining_args=()
-    parse_goodies_args _remaining_args_temp
+    parse_goodies_args "${_remaining_args_temp[@]}"
 
     echo "Installing goodies"
     install_fish

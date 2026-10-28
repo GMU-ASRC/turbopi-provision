@@ -11,7 +11,10 @@
 # TODO: nonint mode
 # TODO: set flag if run_all, then do arg checks after
 
-_ASRC_remaining_args=()
+if ! declare -p _ASRC_remaining_args; then
+    # for some reason this sometimes clears the variable
+    declare -a _ASRC_remaining_args
+fi
 _ASRC_common_args_parsed="${_ASRC_common_args_parsed:-''}"
 
 _ASRC_DEFAULT_SUDO="sudo"
@@ -68,7 +71,7 @@ parse_common_args() {
                 ;;
             *)
                 # err "unknown argument: $1"
-                _ASRC_remaining_args+=("$1")
+                _ASRC_remaining_args+=( "$1" )
                 shift
                 ;;
         esac
