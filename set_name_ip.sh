@@ -10,6 +10,7 @@ _ASRC_DEFAULT_HOSTNAMES=(
     "raspberrypi"
 )
 _ASRC_set_name_ip_args_parsed=1
+_ASRC_PROMPT_DEFAULT_NAME=1
 ROBOT_NAME_PREFIX=${ROBOT_NAME_PREFIX:-'turbopi-'}
 GATEWAY=${GATEWAY:-'192.168.0.1'}
 NAMESERVER=${NAMESERVER:-$GATEWAY}
@@ -21,7 +22,7 @@ MAX_ROBOT_SUFFIX=154
 parse_setname_args() {
     while [ $# -gt 0 ]; do
         case "$1" in
-            --skip_non_default)
+            --try-auto-set)
                 _ASRC_PROMPT_DEFAULT_NAME=0
                 shift
                 ;;
@@ -430,7 +431,7 @@ interactive_rename() {
 main() {
     local hostname=$(cat /etc/hostname)
     echo "Checking if hostname $hostname is default or of parsable format..."
-    if [ "${_ASRC_PROMPT_DEFAULT_NAME}" = "0" ] && ! is_default_hostname ; then
+    if [ "${_ASRC_PROMPT_DEFAULT_NAME}" -eq "0" ] && ! is_default_hostname ; then
         echo "Current static/persistent hostname does not match any default hostnames."
         echo "Checking if there's a single wifi connection to modify..."
         local wifi_conn=$(try_get_single_wifi_connection)
@@ -465,13 +466,16 @@ main() {
             fi
         fi
         return 0
-    fi
-    echo "Hostname looks like a default value."
-    echo "Let's give this robot a number."
-    echo "Then, we'll change the hostname and set a static IP."
-    whiptail_menu
-    if [ $? -eq "0" ]; then
-        interactive_rename
+    else
+        if [ "${_ASRC_PROMPT_DEFAULT_NAME}" -eq "1" ]; then
+            echo "Hostname looks like a default value."
+        fi
+        echo "Let's give this robot a number."
+        echo "Then, we'll change the hostname and set a static IP."
+        whiptail_menu
+        if [ $? -eq "0" ]; then
+            interactive_rename
+        fi
     fi
 }
 
