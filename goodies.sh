@@ -17,7 +17,7 @@ parse_common_args "$@"
 _ASRC_APT_UPDATED=1
 
 parse_goodies_args() {
-    U=${U:-pi}
+    U=${U:-"$USER"}
     H=${H:-"/home/$U"}
     BASHRC=${BASHRC:-"$(realpath $H/.bashrc)"}
 
