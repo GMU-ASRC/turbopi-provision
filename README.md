@@ -39,6 +39,8 @@ This software has only been tested on the following hardware and software setup:
       * Wi-Fi: If you want to connect to WiFi, enter your WiFi credentials here.
       * Enable SSH: Yes
           * Authentication mechanism: <kbd><samp>Use password authentication</samp></kbd>
+> [!WARNING]
+> The hostname and static IP of the robot must be unique. If two robots with the same name or IP address connect to the same network, the hostname/address collision may cause network connection issues that persist for a short while even after the robots are turned off.
 2. Insert the microSD card into the Raspberry Pi. You'll need to undo the four screws on the metal ultrasonic sensor cover to access the micro SD card on the Raspberry Pi.
     
   > [!TIP]
