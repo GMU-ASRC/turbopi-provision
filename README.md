@@ -27,6 +27,13 @@ This software has only been tested on the following hardware and software setup:
   Note: Earlier versions of the RasAdapter may not have the silkscreened
   hardware revision label.
 
+# Numbering
+
+All the Turbopis in the lab are numbered. When you build and commission a new Turbopi, please serialize it, i.e. give it the next largest unused number. Make sure to put the right sticker on!
+
+> [!NOTE]
+> The number also needs to be set in software. This can be done in either Step 1 or Step 7 below.
+
 # Installation
 
 1. Use the [Raspberry Pi Imager](https://www.raspberrypi.com/software/) to flash the latest Raspberry Pi OS image to a microSD card.
@@ -35,8 +42,11 @@ This software has only been tested on the following hardware and software setup:
     * Device: Raspberry Pi 4
     * Operating System: Raspberry Pi OS (64-bit) Debian Trixie (recommended)
     * Customization:
-      * Hostname: Enter a unique hostname and remember it.
-      * Wi-Fi: If you want to connect to WiFi, enter your WiFi credentials here.
+      * Hostname: Set the unique robot name here.
+        * Either set the number, like `turbopi-01`,
+        or set as `turbopi-00` or `raspberrypi` to get prompted to set the number in the script in step 7.
+      * Wi-Fi: If you want to connect to WiFi, enter the WiFi credentials here.
+        * The script will set up a static IP for the robot using the hostname in step 7. If you give the robot a `turbopi-nn` hostname where the last two digits are not `00`, then it will set the IP without prompting you.
       * Enable SSH: Yes
           * Authentication mechanism: <kbd><samp>Use password authentication</samp></kbd>
 2. Insert the microSD card into the Raspberry Pi. You'll need to undo the four screws on the metal ultrasonic sensor cover to access the micro SD card on the Raspberry Pi.
