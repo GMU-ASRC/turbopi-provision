@@ -301,6 +301,9 @@ infer_suffix_from_hostname() {
 do_rename_robot() {
     local suffix="$1"
     local new_name="$(format_robot_name_from_number $suffix)"
+    if [ "$phostname" != "$(hostname)" ]; then
+        local afterreboot=' (takes effect after reboot)'
+    fi
     if [ -z "$CONNECTION" ]; then
         CONNECTION=$(whiptail_choose_connection)
     fi
@@ -328,6 +331,7 @@ do_rename_robot() {
     #     (IFS=,; addresses+=$new_ip_full)
     #     nmcli connection modify "$CONNECTION" ipv4.addresses $addresses
     # fi
+    echo This might take a few seconds...
     do_sudo nmcli connection modify "$CONNECTION" ipv4.addresses "$NEW_IP_FULL"
     do_sudo nmcli connection modify "$CONNECTION" ipv4.gateway "$GATEWAY"
     do_sudo nmcli connection modify "$CONNECTION" ipv4.dns "$NAMESERVER"
@@ -335,15 +339,15 @@ do_rename_robot() {
     # do_sudo nmcli connection up "$CONNECTION"
     echo "Done."
     echo
-    echo "\
-Some changes might only take effect after reboot.\n\
-Make sure to use the new hostname when re-connecting!\n\
-Hostname >>> $phostname$afterreboot <<<\n\
-Connection: $CONNECTION\n\
-IP ($mode): $(nmcli -g ipv4.addresses connection show "$CONNECTION")\n\
-Gateway: $(nmcli -g ipv4.gateway connection show "$CONNECTION") \
-Nameserver: $(nmcli -g ipv4.dns connection show "$CONNECTION")\n\
-"
+    echo "Some changes might only take effect after reboot."
+    echo "Make sure to use the new hostname when re-connecting!"
+    echo
+    echo "Hostname >>> $new_name$afterreboot <<<"
+    echo
+    echo "Connection: $CONNECTION"
+    echo "IP ($mode): $(nmcli -g ipv4.addresses connection show "$CONNECTION")"
+    echo "Gateway: $(nmcli -g ipv4.gateway connection show "$CONNECTION")"
+    echo "Nameserver: $(nmcli -g ipv4.dns connection show "$CONNECTION")"
 }
 
 
